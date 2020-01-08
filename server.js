@@ -2,45 +2,52 @@ const fs = require('fs');
 
 let grid = [];
 let coordinates = [];
+let dirtCoordinates = [];
 let instructions = [];
-let input;
+let input = [];
+
 
 const hoover = {
     xPos: Number,
     yPos: Number,
+    dirtCleaned: 0
 };
 
-const checkRoomLimits = ()=>{
-        if(hoover.xPos + 1 > grid[0] || hoover.yPos + 1 > grid[1] ){
-            return `Cannot move there as it would take the hoover outside room limitations`;
-        } else {
-            // console.log('')
-        }
-};
+const checkCoordinates = (currentPlacement) =>{
+    dirtCoordinates.forEach(coordinate=>{
+        if(coordinate[0] == currentPlacement[0] && coordinate [1] == currentPlacement[1]){
+            console.log(`Hoover's coordinates are ${currentPlacement} and vacuumed dirt at ${coordinate}`);
+            hoover.dirtCleaned = hoover.dirtCleaned + 1;
+        };
+    });
+} ;
 
 const placeHoover = (xInput,yInput) => {    
     hoover.xPos = parseInt(xInput);
     hoover.yPos = parseInt(yInput);
-    hoover.coordinates= `(${hoover.xPos}, ${hoover.yPos})`;
+    hoover.coordinates= [hoover.xPos, hoover.yPos];
+    console.log(`Hoover started at ${hoover.coordinates}`);
     if(coordinates[1][0] > grid[0] || coordinates[1][1] > grid[1] || coordinates[1][0] < 0 ||coordinates[1][1] > grid[1] < 0) return `Hoover has been placed outside of room dimensions`;
     instructions.forEach(direction=> console.log(moveHoover(direction)));
-    return `Hoover started at ${hoover.coordinates}`;
 };
 
 const moveHoover = (direction) => {
     if (direction == 'N'){
-        // console.log(checkRoomLimits());
         hoover.yPos = hoover.yPos + 1;
-        hoover.coordinates= `(${hoover.xPos}, ${hoover.yPos})`;
+        hoover.coordinates= [hoover.xPos, hoover.yPos];
+        checkCoordinates(hoover.coordinates);
     } else if (direction == 'S'){
         hoover.yPos = hoover.yPos - 1;
-        hoover.coordinates= `(${hoover.xPos}, ${hoover.yPos})`;
+        hoover.coordinates= [hoover.xPos, hoover.yPos];
+        checkCoordinates(hoover.coordinates);
     } else if(direction == 'E'){
         hoover.xPos = hoover.xPos + 1;
-        hoover.coordinates= `(${hoover.xPos}, ${hoover.yPos})`;
+        hoover.coordinates= [hoover.xPos, hoover.yPos];
+        checkCoordinates(hoover.coordinates);
     } else if(direction == 'W'){
         hoover.xPos = hoover.xPos - 1;
-        hoover.coordinates= `(${hoover.xPos}, ${hoover.yPos})`;
+        hoover.coordinates= [hoover.xPos, hoover.yPos];
+        checkCoordinates(hoover.coordinates);
     } else{
         return `${direction} is not a valid direction`;
     }
@@ -66,6 +73,8 @@ const setUp = () => {
         };
         grid[0] = coordinates[0][0];
         grid[1] = coordinates[0][1];
+        dirtCoordinates = coordinates.slice(1).slice(-3);
+        dirtCoordinates = dirtCoordinates.map(item=>item.map(item=>parseInt(parseInt(item))));
         instructions = input.filter(index => isNaN(index));
         console.log(placeHoover(coordinates[1][0], coordinates[1][1]));
     });
