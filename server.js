@@ -16,11 +16,11 @@ const hoover = {
 const checkCoordinates = (currentPlacement) =>{
     dirtCoordinates.forEach(coordinate=>{
         if(coordinate[0] == currentPlacement[0] && coordinate [1] == currentPlacement[1]){
-            console.log(`Hoover's coordinates are ${currentPlacement} and vacuumed dirt at ${coordinate}`);
+            console.log(`The hoover is at (${currentPlacement}) and has found dirt`);
             hoover.dirtCleaned = hoover.dirtCleaned + 1;
         };
     });
-} ;
+};
 
 const placeHoover = (xInput,yInput) => {    
     hoover.xPos = parseInt(xInput);
@@ -28,30 +28,33 @@ const placeHoover = (xInput,yInput) => {
     hoover.coordinates= [hoover.xPos, hoover.yPos];
     console.log(`Hoover started at ${hoover.coordinates}`);
     if(coordinates[1][0] > grid[0] || coordinates[1][1] > grid[1] || coordinates[1][0] < 0 ||coordinates[1][1] > grid[1] < 0) return `Hoover has been placed outside of room dimensions`;
-    instructions.forEach(direction=> console.log(moveHoover(direction)));
+    instructions.forEach(direction=> moveHoover(direction));
 };
 
 const moveHoover = (direction) => {
     if (direction == 'N'){
         hoover.yPos = hoover.yPos + 1;
         hoover.coordinates= [hoover.xPos, hoover.yPos];
+        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
         checkCoordinates(hoover.coordinates);
     } else if (direction == 'S'){
         hoover.yPos = hoover.yPos - 1;
         hoover.coordinates= [hoover.xPos, hoover.yPos];
+        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
         checkCoordinates(hoover.coordinates);
     } else if(direction == 'E'){
         hoover.xPos = hoover.xPos + 1;
         hoover.coordinates= [hoover.xPos, hoover.yPos];
+        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
         checkCoordinates(hoover.coordinates);
     } else if(direction == 'W'){
         hoover.xPos = hoover.xPos - 1;
         hoover.coordinates= [hoover.xPos, hoover.yPos];
+        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
         checkCoordinates(hoover.coordinates);
     } else{
-        return `${direction} is not a valid direction`;
+        return console.log(`${direction} is not a valid direction`);
     }
-    return `Hoover has moved ${direction} and its coordinates are now ${hoover.coordinates}`;
 }
 
 // output: display final hoover position
@@ -76,7 +79,8 @@ const setUp = () => {
         dirtCoordinates = coordinates.slice(1).slice(-3);
         dirtCoordinates = dirtCoordinates.map(item=>item.map(item=>parseInt(parseInt(item))));
         instructions = input.filter(index => isNaN(index));
-        console.log(placeHoover(coordinates[1][0], coordinates[1][1]));
+        placeHoover(coordinates[1][0], coordinates[1][1]);
+        return console.log(`Hoover ended at (${hoover.xPos}, ${hoover.yPos}) and vacuumed ${hoover.dirtCleaned} mounds of dirt`);
     });
 };
 
