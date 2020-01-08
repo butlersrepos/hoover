@@ -14,10 +14,17 @@ const hoover = {
 };
 
 const checkCoordinates = (currentPlacement) =>{
+    let hooverPlacement = `${currentPlacement[0]}, ${currentPlacement[1]}`;
     dirtCoordinates.forEach(coordinate=>{
-        if(coordinate[0] == currentPlacement[0] && coordinate [1] == currentPlacement[1]){
+        let dirt = `${coordinate[0]}, ${coordinate[1]}`;
+        if(dirt == hooverPlacement){
             console.log(`The hoover is at (${currentPlacement}) and has found dirt`);
             hoover.dirtCleaned = hoover.dirtCleaned + 1;
+            const index = dirtCoordinates.indexOf(coordinate);
+            if(index > -1){
+                dirtCoordinates.splice(index, 1);
+                console.log(dirtCoordinates);
+            }
         };
     });
 };
