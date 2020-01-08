@@ -14,7 +14,7 @@ const checkRoomLimits = ()=>{
         if(hoover.xPos + 1 > grid[0] || hoover.yPos + 1 > grid[1] ){
             return `Cannot move there as it would take the hoover outside room limitations`;
         } else {
-            console.log('')
+            // console.log('')
         }
 };
 
@@ -22,6 +22,8 @@ const placeHoover = (xInput,yInput) => {
     hoover.xPos = parseInt(xInput);
     hoover.yPos = parseInt(yInput);
     hoover.coordinates= `(${hoover.xPos}, ${hoover.yPos})`;
+    if(coordinates[1][0] > grid[0] || coordinates[1][1] > grid[1] || coordinates[1][0] < 0 ||coordinates[1][1] > grid[1] < 0) return `Hoover has been placed outside of room dimensions`;
+    instructions.forEach(direction=> console.log(moveHoover(direction)));
     return `Hoover started at ${hoover.coordinates}`;
 };
 
@@ -65,9 +67,7 @@ const setUp = () => {
         grid[0] = coordinates[0][0];
         grid[1] = coordinates[0][1];
         instructions = input.filter(index => isNaN(index));
-        // if(coordinates[1][0] > grid[0] || coordinates[1][1] > grid[1] || coordinates[1][0] < 0 ||coordinates[1][1] > grid[1] < 0) return `Hoover has been placed outside of room dimensions`;
         console.log(placeHoover(coordinates[1][0], coordinates[1][1]));
-        instructions.forEach(direction=> console.log(moveHoover(direction)));
     });
 };
 
