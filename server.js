@@ -6,13 +6,14 @@ let dirtCoordinates = [];
 let instructions = [];
 let input = [];
 
-
+// hoover object containing its coordinates and how much dirt it has picked up
 const hoover = {
     xPos: Number,
     yPos: Number,
     dirtCleaned: 0
 };
 
+// function checks the coordinates of the hoover to see if it is out of bounds or on dirt
 const checkCoordinates = (currentPlacement) =>{
     let hooverPlacement = `${currentPlacement[0]}, ${currentPlacement[1]}`;
     dirtCoordinates.forEach(coordinate=>{
@@ -23,12 +24,12 @@ const checkCoordinates = (currentPlacement) =>{
             const index = dirtCoordinates.indexOf(coordinate);
             if(index > -1){
                 dirtCoordinates.splice(index, 1);
-                console.log(dirtCoordinates);
-            }
+            };
         };
     });
 };
 
+// places hoover in the start position determined by the text file and calles the function that moves it
 const placeHoover = (xInput,yInput) => {    
     hoover.xPos = parseInt(xInput);
     hoover.yPos = parseInt(yInput);
@@ -38,6 +39,7 @@ const placeHoover = (xInput,yInput) => {
     instructions.forEach(direction=> moveHoover(direction));
 };
 
+// takes in the instructions from the text file and moves the hoover. Also calls the check function
 const moveHoover = (direction) => {
     if (direction == 'N'){
         hoover.yPos = hoover.yPos + 1;
@@ -61,12 +63,10 @@ const moveHoover = (direction) => {
         checkCoordinates(hoover.coordinates);
     } else{
         return console.log(`${direction} is not a valid direction`);
-    }
-}
+    };
+};
 
-// output: display final hoover position
-//         display patches vacuumed
-
+// extracts the text file and parses it into multiple arrays that are used for the functions
 const setUp = () => {
     let j = 0;
     fs.readFile('input.txt', (error,data)=>{
@@ -87,7 +87,11 @@ const setUp = () => {
         dirtCoordinates = dirtCoordinates.map(item=>item.map(item=>parseInt(parseInt(item))));
         instructions = input.filter(index => isNaN(index));
         placeHoover(coordinates[1][0], coordinates[1][1]);
-        return console.log(`Hoover ended at (${hoover.xPos}, ${hoover.yPos}) and vacuumed ${hoover.dirtCleaned} mounds of dirt`);
+        if(hoover.dirtCleaned == 1){
+            return console.log(`Hoover ended at (${hoover.xPos}, ${hoover.yPos}) and vacuumed ${hoover.dirtCleaned} mound of dirt`);
+        } else{
+            return console.log(`Hoover ended at (${hoover.xPos}, ${hoover.yPos}) and vacuumed ${hoover.dirtCleaned} mound of dirt`);
+        };
     });
 };
 
