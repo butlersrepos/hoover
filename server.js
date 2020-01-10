@@ -8,44 +8,9 @@ let input = [];
 
 // hoover object containing its coordinates and how much dirt it has picked up
 const hoover = {
-    xPos: Number,
-    yPos: Number,
+    xPos: 0,
+    yPos: 0,
     dirtCleaned: 0
-};
-
-const checkForWall = () => {
-    const response = () => {
-        console.log('Hoover has hit a wall and bounced back to its original space');
-    };
-    if(hoover.xPos > grid[0]){
-        response();
-        hoover.xPos = hoover.xPos - 1;
-    } else if (hoover.yPos > grid[1]){
-        response();
-        hoover.yPos = hoover.yPos - 1;
-    } else if(hoover.xPos < 0){
-        hoover.xPos = hoover.xPos + 1;
-        response();
-    } else if(hoover.yPos < 0){
-        hoover.yPos = hoover.yPos + 1;
-        response();
-    };  
-};
-
-// function checks the coordinates of the hoover to see if it is out of bounds or on dirt
-const checkCoordinates = (currentPlacement) =>{
-    let hooverPlacement = `${currentPlacement[0]}, ${currentPlacement[1]}`;
-    dirtCoordinates.forEach(coordinate=>{
-        let dirt = `${coordinate[0]}, ${coordinate[1]}`;
-        if(dirt == hooverPlacement){
-            const index = dirtCoordinates.indexOf(coordinate);
-            console.log(`The hoover is at (${currentPlacement}) and has found dirt`);
-            hoover.dirtCleaned = hoover.dirtCleaned + 1;
-            if(index > -1){
-                dirtCoordinates.splice(index, 1);
-            };
-        };
-    });
 };
 
 // places hoover in the start position determined by the text file and calles the function that moves it
@@ -88,6 +53,41 @@ const moveHoover = (direction) => {
     } else{
         return console.log(`${direction} is not a valid direction`);
     };
+};
+
+const checkForWall = () => {
+    const response = () => {
+        console.log('Hoover has hit a wall and bounced back to its original space');
+    };
+    if(hoover.xPos > grid[0]){
+        response();
+        hoover.xPos = hoover.xPos - 1;
+    } else if (hoover.yPos > grid[1]){
+        response();
+        hoover.yPos = hoover.yPos - 1;
+    } else if(hoover.xPos < 0){
+        hoover.xPos = hoover.xPos + 1;
+        response();
+    } else if(hoover.yPos < 0){
+        hoover.yPos = hoover.yPos + 1;
+        response();
+    };  
+};
+
+// function checks the coordinates of the hoover to see if it is out of bounds or on dirt
+const checkCoordinates = (currentPlacement) =>{
+    let hooverPlacement = `${currentPlacement[0]}, ${currentPlacement[1]}`;
+    dirtCoordinates.forEach(coordinate=>{
+        let dirt = `${coordinate[0]}, ${coordinate[1]}`;
+        if(dirt == hooverPlacement){
+            const index = dirtCoordinates.indexOf(coordinate);
+            console.log(`The hoover is at (${currentPlacement}) and has found dirt`);
+            hoover.dirtCleaned = hoover.dirtCleaned + 1;
+            if(index > -1){
+                dirtCoordinates.splice(index, 1);
+            };
+        };
+    });
 };
 
 // extracts the text file and parses it into multiple arrays that are used for the functions
