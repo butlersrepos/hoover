@@ -13,6 +13,13 @@ const hoover = {
     dirtCleaned: 0
 };
 
+const changeCoordinates = (direction) =>{
+    hoover.coordinates= [hoover.xPos, hoover.yPos];
+    console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
+    checkForWall();
+    checkCoordinates(hoover.coordinates);
+};
+
 // places hoover in the start position determined by the text file and calles the function that moves it
 const placeHoover = (xInput,yInput) => {    
     hoover.xPos = parseInt(xInput);
@@ -28,28 +35,16 @@ const placeHoover = (xInput,yInput) => {
 const moveHoover = (direction) => {
     if (direction == 'N'){
         hoover.yPos = hoover.yPos + 1;
-        hoover.coordinates= [hoover.xPos, hoover.yPos];
-        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
-        checkForWall();
-        checkCoordinates(hoover.coordinates);
+        changeCoordinates(direction);
     } else if (direction == 'S'){
         hoover.yPos = hoover.yPos - 1;
-        hoover.coordinates= [hoover.xPos, hoover.yPos];
-        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
-        checkForWall();
-        checkCoordinates(hoover.coordinates);
+        changeCoordinates(direction);
     } else if(direction == 'E'){
         hoover.xPos = hoover.xPos + 1;
-        hoover.coordinates= [hoover.xPos, hoover.yPos];
-        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
-        checkForWall();
-        checkCoordinates(hoover.coordinates);
+        changeCoordinates(direction);
     } else if(direction == 'W'){
         hoover.xPos = hoover.xPos - 1;
-        hoover.coordinates= [hoover.xPos, hoover.yPos];
-        checkForWall();
-        console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
-        checkCoordinates(hoover.coordinates);
+        changeCoordinates(direction);
     } else{
         return console.log(`${direction} is not a valid direction`);
     };
@@ -94,7 +89,7 @@ const checkCoordinates = (currentPlacement) =>{
 const startHoover = () => {
     let j = 0;
     // this method reads the input file
-    // converts into a string
+    // converts it into a string
     // splits it into an array of characters 
     // filters out the spaces and indentations
     // then iterates over the array and pushes numbers into an array as coordinates
