@@ -13,14 +13,6 @@ const hoover = {
     dirtCleaned: 0
 };
 
-// changes the coordinates and checks to see if it has vacuumed dirt or hit a wall
-const changeCoordinates = (direction) =>{
-    hoover.coordinates= [hoover.xPos, hoover.yPos];
-    console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
-    checkForWall();
-    checkCoordinates(hoover.coordinates);
-};
-
 // places hoover in the start position determined by the text file and calls the function that moves it
 const placeHoover = (xInput,yInput) => {    
     hoover.xPos = parseInt(xInput);
@@ -51,6 +43,14 @@ const moveHoover = (direction) => {
     } else{
         return console.log(`${direction} is not a valid direction`);
     };
+};
+
+// changes the coordinates and checks to see if it has vacuumed dirt or hit a wall
+const changeCoordinates = (direction) =>{
+    hoover.coordinates= [hoover.xPos, hoover.yPos];
+    console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
+    checkForWall();
+    checkCoordinates(hoover.coordinates);
 };
 
 // checks to see if hoover has hit the boundaries and make sure it does not go
