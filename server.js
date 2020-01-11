@@ -1,10 +1,10 @@
 const fs = require('fs');
 
+let input = [];
 let grid = [];
 let coordinates = [];
 let dirtCoordinates = [];
 let instructions = [];
-let input = [];
 
 // hoover object containing its coordinates and how much dirt it has picked up
 const hoover = {
@@ -13,6 +13,7 @@ const hoover = {
     dirtCleaned: 0
 };
 
+// changes the coordinates and checks to see if it has vacuumed dirt or hit a wall
 const changeCoordinates = (direction) =>{
     hoover.coordinates= [hoover.xPos, hoover.yPos];
     console.log(`Hoover has moved ${direction} and its coordinates are now (${hoover.coordinates})`);
@@ -20,18 +21,20 @@ const changeCoordinates = (direction) =>{
     checkCoordinates(hoover.coordinates);
 };
 
-// places hoover in the start position determined by the text file and calles the function that moves it
+// places hoover in the start position determined by the text file and calls the function that moves it
 const placeHoover = (xInput,yInput) => {    
     hoover.xPos = parseInt(xInput);
     hoover.yPos = parseInt(yInput);
     hoover.coordinates= [hoover.xPos, hoover.yPos];
     console.log(`Hoover started at ${hoover.coordinates}`);
-    // checks to see if hoover's staring coordinates go past the grid's limitations
-    if(coordinates[1][0] > grid[0] || coordinates[1][1] > grid[1] || coordinates[1][0] < 0 ||coordinates[1][1] > grid[1] < 0) return `Hoover has been placed outside of room dimensions`;
+    // checks to see if hoover's starting coordinates go past the grid's limitations
+    if(coordinates[1][0] > grid[0] || coordinates[1][1] > grid[1] || coordinates[1][0] < 0 ||coordinates[1][1] > grid[1] < 0) {
+        return console.log(`Hoover has been placed outside of room dimensions`);
+    };
     instructions.forEach(direction=> moveHoover(direction));
 };
 
-// takes in the instructions from the text file and moves the hoover. Also calls the check function
+// takes in the instructions from the text file and moves the hoover.
 const moveHoover = (direction) => {
     if (direction == 'N'){
         hoover.yPos = hoover.yPos + 1;
@@ -50,6 +53,8 @@ const moveHoover = (direction) => {
     };
 };
 
+// checks to see if hoover has hit the boundaries and make sure it does not go
+// past the boundaries
 const checkForWall = () => {
     const response = () => {
         console.log('Hoover has hit a wall and bounced back to its original space');
@@ -61,11 +66,11 @@ const checkForWall = () => {
         response();
         hoover.yPos = hoover.yPos - 1;
     } else if(hoover.xPos < 0){
+        response();
         hoover.xPos = hoover.xPos + 1;
-        response();
     } else if(hoover.yPos < 0){
-        hoover.yPos = hoover.yPos + 1;
         response();
+        hoover.yPos = hoover.yPos + 1;
     };  
 };
 
@@ -112,7 +117,7 @@ const startHoover = () => {
         for(let i = 2; i < coordinates.length; i++){
             dirtCoordinates.push(coordinates[i]);
         };
-        dirtCoordinates = dirtCoordinates.map(item=>item.map(item=>parseInt(parseInt(item))));
+        dirtCoordinates = dirtCoordinates.map(item=>item.map(item=>parseInt(item)));
         // filters the letters in the input array and assigns the instructions variable as the filtered array
         instructions = input.filter(index => isNaN(index));
         placeHoover(coordinates[1][0], coordinates[1][1]);
