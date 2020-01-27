@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// Sync read is just for readability in this exercise
 const inputs = fs.readFileSync('input.txt', { encoding: 'UTF-8' });
 const lines = inputs.split('\n');
 
