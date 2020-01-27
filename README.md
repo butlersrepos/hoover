@@ -2,6 +2,7 @@
 
 ```
 git clone https://github.com/butlersrepos/hoover.git
+cd hoover
 node index.js
 ```
 
