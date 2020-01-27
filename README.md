@@ -1,7 +1,7 @@
-# Imaginary Hoover
+# Butler Hoover
 
 ```
-git clone https://github.com/edfranco/hoover.git
+git clone https://github.com/butlersrepos/hoover.git
 node index.js
 ```
 
